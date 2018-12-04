@@ -9,12 +9,21 @@ const port = 5000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-var twitter = new Twitter(keys);
+const twitter = new Twitter(keys);
 
 app.get("/get-tweets", (req, res) => {
   twitter.getUserTimeline(
     { tweet_mode: "extended", screen_name: "realDonaldTrump", count: "5" },
-    err => res.send(err),
+    err => console.log(err),
+    data => res.send(data)
+  );
+});
+
+app.post("/get-tweets", (req, res) => {
+  const { screenName } = req.body;
+  twitter.getUserTimeline(
+    { tweet_mode: "extended", screen_name: screenName, count: "50" },
+    err => console.log(err),
     data => res.send(data)
   );
 });

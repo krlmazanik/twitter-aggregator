@@ -1,7 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import store from "../store/";
 import { setTweets } from "../store/actions/tweets-actions";
+import Header from "../components/Header";
+import TweetsList from "./TweetsList";
 
 class App extends Component {
   componentDidMount() {
@@ -12,11 +14,10 @@ class App extends Component {
 
   render() {
     return (
-      <ul>
-        {this.props.tweets.map(tweet => (
-          <li>{tweet.full_text}</li>
-        ))}
-      </ul>
+      <Fragment>
+        <Header />
+        <TweetsList />
+      </Fragment>
     );
   }
 }
