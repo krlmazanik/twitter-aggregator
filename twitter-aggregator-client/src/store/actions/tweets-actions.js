@@ -6,3 +6,11 @@ export function setTweets(tweets) {
     tweets
   };
 }
+
+export function sortTweets(sortType, direction) {
+  return {
+    type: types.SORT_TWEETS,
+    sortType,
+    direction
+  };
+}

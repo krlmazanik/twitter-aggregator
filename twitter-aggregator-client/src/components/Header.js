@@ -21,7 +21,7 @@ const Header = () => {
     <Navbar>
       <Navbar.Header>
         <Navbar.Brand>
-          <a href="#">Twitter Analytics</a>
+          <a href="/">Twitter Analytics</a>
         </Navbar.Brand>
       </Navbar.Header>
       <Navbar.Collapse>

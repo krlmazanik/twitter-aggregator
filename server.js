@@ -13,7 +13,7 @@ const twitter = new Twitter(keys);
 
 app.get("/get-tweets", (req, res) => {
   twitter.getUserTimeline(
-    { tweet_mode: "extended", screen_name: "realDonaldTrump", count: "5" },
+    { tweet_mode: "extended", screen_name: "realDonaldTrump", count: "50" },
     err => console.log(err),
     data => res.send(data)
   );
