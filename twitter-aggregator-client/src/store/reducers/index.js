@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
 
 import tweets from "./tweets";
+import modal from "./modal";
 
 const rootReducer = combineReducers({
-  tweets
+  tweets,
+  modal
 });
 
 export default rootReducer;

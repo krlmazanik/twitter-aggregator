@@ -1,7 +1,8 @@
 import React from "react";
-import { DropdownButton, MenuItem } from "react-bootstrap/lib/";
+import { DropdownButton, MenuItem, Button } from "react-bootstrap/lib/";
 import store from "../store";
 import { sortTweets } from "../store/actions/tweets-actions";
+import { toggleModal } from "../store/actions/modal-actions";
 
 const SortComponent = () => {
   const handleClick = (sortType, direction) => {
@@ -28,6 +29,12 @@ const SortComponent = () => {
           Show in Ascending Order
         </MenuItem>
       </DropdownButton>
+      <Button
+        onClick={() => store.dispatch(toggleModal(true))}
+        style={{ marginLeft: "35px" }}
+      >
+        Check Tweets Statistics
+      </Button>
     </div>
   );
 };
