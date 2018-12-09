@@ -84,7 +84,7 @@ const StatModal = props => {
 const mapStateToProps = function(store) {
   return {
     modal: store.modal,
-    tweets: store.tweets.tweets
+    tweets: store.tweets.present.tweets
   };
 };
 
