@@ -5,12 +5,13 @@ import Tweet from "../components/Tweet";
 import StatModal from "./StatModal";
 import ControlPanel from "../components/ControlPanel";
 import FilterPanel from "../components/FilterPanel";
+import Spinner from "../components/Spinner";
 
 import { ActionCreators as UndoActionCreators } from "redux-undo";
 import store from "../store";
 
 const TweetsList = props => {
-  const { tweets } = props;
+  const { tweets, isFetching } = props;
   const isLoaded = props.tweets.length >= 1;
 
   const handleUndo = () => {
@@ -18,19 +19,17 @@ const TweetsList = props => {
   };
   return (
     <Grid>
-      {isLoaded && (
-        <Fragment>
-          <ControlPanel />
-          <FilterPanel
-            isFiltersOpen={props.isFiltersOpen}
-            canUndo={props.canUndo}
-          />{" "}
-          <StatModal />
-          {tweets.map(tweet => (
-            <Tweet tweet={tweet} key={tweet.id} />
-          ))}
-        </Fragment>
-      )}
+      <Fragment>
+        <ControlPanel />
+        <FilterPanel
+          isFiltersOpen={props.isFiltersOpen}
+          canUndo={props.canUndo}
+        />{" "}
+        <StatModal />
+        <Spinner isFetching={isFetching} />
+        {isLoaded &&
+          tweets.map(tweet => <Tweet tweet={tweet} key={tweet.id} />)}
+      </Fragment>
 
       {!isLoaded && props.canUndo && (
         <Fragment>
@@ -47,7 +46,8 @@ const TweetsList = props => {
 const mapStateToProps = function(store) {
   return {
     tweets: store.tweets.present.tweets,
-    isFiltersOpen: store.filterBox.isFiltersOpen
+    isFiltersOpen: store.filterBox.isFiltersOpen,
+    isFetching: store.tweets.present.isFetching
   };
 };
 
