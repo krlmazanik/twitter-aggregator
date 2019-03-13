@@ -1,5 +1,6 @@
 import {
-  SET_TWEETS,
+  REQUEST_TWEETS,
+  RECEIVE_TWEETS,
   SORT_TWEETS,
   FILTER_BY_DATE,
   FILTER_BY_LIKES,
@@ -9,10 +10,18 @@ import {
 } from "../actions/actionTypes";
 import undoable, { includeAction } from "redux-undo";
 
-const tweets = (state = { tweets: [] }, action) => {
+const initialState = {
+  tweets: [],
+  isFetching: false
+};
+
+const tweets = (state = initialState, action) => {
   switch (action.type) {
-    case SET_TWEETS:
-      return { tweets: action.tweets };
+    case REQUEST_TWEETS:
+      return { ...state, isFetching: true };
+
+    case RECEIVE_TWEETS:
+      return { ...state, isFetching: false, tweets: action.tweets };
 
     case SORT_TWEETS:
       const { sortType, direction } = action;

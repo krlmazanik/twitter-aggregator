@@ -1,31 +1,29 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import store from "../store/";
-import { setTweets } from "../store/actions/tweets-actions";
+import fetchTweets from "../store/helpers/fetchTweets";
 import Header from "../components/Header";
 import TweetsList from "./TweetsList";
 
 class App extends Component {
   componentDidMount() {
-    fetch("/get-tweets")
-      .then(res => res.json())
-      .then(tweets => store.dispatch(setTweets(tweets)));
+    this.props.fetchTweets("elonmusk");
   }
 
   render() {
     return (
       <Fragment>
-        <Header />
+        <Header fetchTweets={this.props.fetchTweets} />
         <TweetsList />
       </Fragment>
     );
   }
 }
 
-const mapStateToProps = function(store) {
-  return {
-    tweets: store.tweets
-  };
+const mapDispatchToProps = {
+  fetchTweets
 };
 
-export default connect(mapStateToProps)(App);
+export default connect(
+  null,
+  mapDispatchToProps
+)(App);

@@ -1,48 +1,47 @@
-import React from "react";
-import store from "../store/";
-import { setTweets } from "../store/actions/tweets-actions";
+import React, { Component } from "react";
 import { Navbar, FormGroup, FormControl, Button } from "react-bootstrap/lib";
 
-import queryString from "query-string";
+class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { screenName: "" };
+  }
 
-const Header = () => {
-  let textInput = "";
-  const handleOnClick = () => {
-    fetch("/get-tweets", {
-      method: "post",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: queryString.stringify({ screenName: textInput.value })
-    })
-      .then(res => res.json())
-      .then(tweets => store.dispatch(setTweets(tweets)));
+  handleOnClick = () => {
+    this.props.fetchTweets(this.state.screenName);
   };
 
-  return (
-    <Navbar>
-      <Navbar.Header>
-        <Navbar.Brand>
-          <a href="/">Twitter Analytics</a>
-        </Navbar.Brand>
-      </Navbar.Header>
-      <Navbar.Collapse>
-        <Navbar.Form pullRight>
-          <FormGroup>
-            <FormControl
-              type="text"
-              placeholder="Enter the screen name"
-              name="screenName"
-              inputRef={ref => {
-                textInput = ref;
-              }}
-            />
-          </FormGroup>{" "}
-          <Button type="submit" onClick={handleOnClick}>
-            Submit
-          </Button>
-        </Navbar.Form>
-      </Navbar.Collapse>
-    </Navbar>
-  );
-};
+  handleChange = e => {
+    this.setState({ screenName: e.target.value });
+  };
+
+  render() {
+    return (
+      <Navbar>
+        <Navbar.Header>
+          <Navbar.Brand>
+            <a href="/">Twitter Analytics</a>
+          </Navbar.Brand>
+        </Navbar.Header>
+        <Navbar.Collapse>
+          <Navbar.Form pullRight>
+            <FormGroup>
+              <FormControl
+                type="text"
+                placeholder="Enter the screen name"
+                name="screenName"
+                value={this.state.screenName}
+                onChange={this.handleChange}
+              />
+            </FormGroup>{" "}
+            <Button type="submit" onClick={this.handleOnClick}>
+              Submit
+            </Button>
+          </Navbar.Form>
+        </Navbar.Collapse>
+      </Navbar>
+    );
+  }
+}
 
 export default Header;

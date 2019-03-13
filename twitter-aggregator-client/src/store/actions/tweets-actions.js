@@ -1,8 +1,14 @@
 import * as types from "./actionTypes";
 
-export function setTweets(tweets) {
+export function requestTweets() {
   return {
-    type: types.SET_TWEETS,
+    type: types.REQUEST_TWEETS
+  };
+}
+
+export function receiveTweets(tweets) {
+  return {
+    type: types.RECEIVE_TWEETS,
     tweets
   };
 }

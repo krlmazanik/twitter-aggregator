@@ -47,9 +47,10 @@ const TweetsList = props => {
 const mapStateToProps = function(store) {
   return {
     tweets: store.tweets.present.tweets,
-    isFiltersOpen: store.filterBox.isFiltersOpen,
-    canUndo: store.tweets.past.length >= 1
+    isFiltersOpen: store.filterBox.isFiltersOpen
   };
 };
 
 export default connect(mapStateToProps)(TweetsList);
+
+// canUndo: store.tweets.past.length >= 1
