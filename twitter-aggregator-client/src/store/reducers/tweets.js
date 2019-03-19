@@ -136,12 +136,4 @@ const tweets = (state = initialState, action) => {
   }
 };
 
-export default undoable(tweets, {
-  filter: includeAction([
-    FILTER_BY_DATE,
-    FILTER_BY_LIKES,
-    FILTER_BY_LENGTH,
-    FILTER_BY_SUBSTRING,
-    FILTER_BY_EXACT_MENTION
-  ])
-});
+export default tweets;

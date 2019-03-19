@@ -47,10 +47,10 @@ const TweetsList = props => {
 
 const mapStateToProps = store => {
   return {
-    tweets: store.tweets.present.tweets,
+    tweets: store.tweets.tweets,
     isModalOpen: store.modal.isModalOpen,
     isFiltersOpen: store.filterBox.isFiltersOpen,
-    isFetching: store.tweets.present.isFetching
+    isFetching: store.tweets.isFetching
   };
 };
 
