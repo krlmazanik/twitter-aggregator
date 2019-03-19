@@ -8,7 +8,9 @@ class Header extends Component {
   }
 
   handleOnClick = () => {
-    this.props.fetchTweets(this.state.screenName);
+    const { fetchTweets } = this.props;
+
+    fetchTweets(this.state.screenName);
   };
 
   handleChange = e => {

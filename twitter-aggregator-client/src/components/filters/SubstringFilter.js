@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap/lib";
 
-import store from "../../store";
-import { filterBySubstring } from "../../store/actions/tweets-actions";
-
 class SubstringFilter extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       substring: ""
@@ -19,7 +16,9 @@ class SubstringFilter extends Component {
 
   handleApply = () => {
     const { substring } = this.state;
-    store.dispatch(filterBySubstring(substring));
+    const { filterBySubstring } = this.props;
+
+    filterBySubstring(substring);
   };
 
   render() {

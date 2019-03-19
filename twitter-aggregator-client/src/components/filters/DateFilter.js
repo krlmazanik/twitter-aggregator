@@ -3,12 +3,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Button } from "react-bootstrap/lib";
 
-import store from "../../store";
-import { filterByDate } from "../../store/actions/tweets-actions";
-
 class DateFilter extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       dateRange: false
@@ -35,10 +32,12 @@ class DateFilter extends Component {
 
   handleApply = () => {
     const { startDate, endDate } = this.state;
+    const { filterByDate } = this.props;
+
     if (!this.state.dateRange) {
-      store.dispatch(filterByDate([startDate]));
+      filterByDate([startDate]);
     } else {
-      store.dispatch(filterByDate([startDate, endDate]));
+      filterByDate([startDate, endDate]);
     }
   };
 

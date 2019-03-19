@@ -1,56 +1,66 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
-import { Grid, Button } from "react-bootstrap/lib/";
+import { Grid } from "react-bootstrap/lib/";
 import Tweet from "../components/Tweet";
-import StatModal from "./StatModal";
+import StatModal from "../components/StatModal";
 import ControlPanel from "../components/ControlPanel";
-import FilterPanel from "../components/FilterPanel";
+import FilterPanel from "./FilterPanel";
 import Spinner from "../components/Spinner";
-
-import { ActionCreators as UndoActionCreators } from "redux-undo";
-import store from "../store";
+import { toggleModal } from "../store/actions/modal-actions";
+import { toggleFilterBox } from "../store/actions/filterBox-actions";
+import { sortTweets } from "../store/actions/tweets-actions";
 
 const TweetsList = props => {
-  const { tweets, isFetching } = props;
+  const {
+    tweets,
+    isFetching,
+    isModalOpen,
+    isFiltersOpen,
+    toggleModal,
+    toggleFilterBox,
+    sortTweets
+  } = props;
   const isLoaded = props.tweets.length >= 1;
 
-  const handleUndo = () => {
-    store.dispatch(UndoActionCreators.jumpToPast(0));
-  };
   return (
     <Grid>
       <Fragment>
-        <ControlPanel />
-        <FilterPanel
-          isFiltersOpen={props.isFiltersOpen}
-          canUndo={props.canUndo}
-        />{" "}
-        <StatModal />
+        <ControlPanel
+          toggleModal={toggleModal}
+          toggleFilterBox={toggleFilterBox}
+          isFiltersOpen={isFiltersOpen}
+          sortTweets={sortTweets}
+        />
+        <FilterPanel />
+        <StatModal
+          tweets={tweets}
+          isModalOpen={isModalOpen}
+          toggleModal={toggleModal}
+        />
         <Spinner isFetching={isFetching} />
         {isLoaded &&
           tweets.map(tweet => <Tweet tweet={tweet} key={tweet.id} />)}
       </Fragment>
-
-      {!isLoaded && props.canUndo && (
-        <Fragment>
-          <p className="lead">No results were found.</p>
-          <Button bsStyle="danger" onClick={handleUndo}>
-            UNDO APPLIED FILTERS
-          </Button>
-        </Fragment>
-      )}
     </Grid>
   );
 };
 
-const mapStateToProps = function(store) {
+const mapStateToProps = store => {
   return {
     tweets: store.tweets.present.tweets,
+    isModalOpen: store.modal.isModalOpen,
     isFiltersOpen: store.filterBox.isFiltersOpen,
     isFetching: store.tweets.present.isFetching
   };
 };
 
-export default connect(mapStateToProps)(TweetsList);
+const mapDispatchToProps = {
+  toggleModal,
+  toggleFilterBox,
+  sortTweets
+};
 
-// canUndo: store.tweets.past.length >= 1
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TweetsList);

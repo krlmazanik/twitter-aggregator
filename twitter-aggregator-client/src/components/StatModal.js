@@ -1,14 +1,11 @@
 import React, { Fragment } from "react";
-import { connect } from "react-redux";
 import { Modal, Button } from "react-bootstrap/lib";
 import commaNumber from "comma-number";
-import store from "../store/";
-import { toggleModal } from "../store/actions/modal-actions";
 
 const StatModal = props => {
-  const { tweets } = props;
+  const { tweets, isModalOpen, toggleModal } = props;
   const handleClose = () => {
-    store.dispatch(toggleModal(false));
+    toggleModal(false);
   };
 
   const getTotalLikes = (() =>
@@ -56,7 +53,7 @@ const StatModal = props => {
 
   return (
     <Fragment>
-      <Modal show={props.modal.isModalOpen} onHide={handleClose}>
+      <Modal show={isModalOpen} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Tweets statistics:</Modal.Title>
         </Modal.Header>
@@ -81,11 +78,4 @@ const StatModal = props => {
   );
 };
 
-const mapStateToProps = function(store) {
-  return {
-    modal: store.modal,
-    tweets: store.tweets.present.tweets
-  };
-};
-
-export default connect(mapStateToProps)(StatModal);
+export default StatModal;

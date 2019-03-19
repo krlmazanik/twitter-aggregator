@@ -1,12 +1,9 @@
 import React, { Component, Fragment } from "react";
 import { ButtonGroup, Button } from "react-bootstrap/lib";
 
-import store from "../../store";
-import { filterByLikes } from "../../store/actions/tweets-actions";
-
 class LikesFilter extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       filter: "moreThan",
@@ -31,11 +28,12 @@ class LikesFilter extends Component {
 
   handleApply = () => {
     const { likesStart, filter } = this.state;
+    const { filterByLikes } = this.props;
     if (filter === "rangeOf") {
       const { likesEnd } = this.state;
-      store.dispatch(filterByLikes([likesStart, likesEnd], filter));
+      filterByLikes([likesStart, likesEnd], filter);
     } else {
-      store.dispatch(filterByLikes(likesStart, filter));
+      filterByLikes(likesStart, filter);
     }
   };
 

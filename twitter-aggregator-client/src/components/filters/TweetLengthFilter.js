@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { ButtonGroup, Button } from "react-bootstrap/lib";
 
-import store from "../../store";
-import { filterByLength } from "../../store/actions/tweets-actions";
-
 class TweetLengthFilter extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       filter: "moreThan",
@@ -30,8 +27,9 @@ class TweetLengthFilter extends Component {
 
   handleApply = () => {
     const { tweetLength, filter } = this.state;
+    const { filterByLength } = this.props;
 
-    store.dispatch(filterByLength(tweetLength, filter));
+    filterByLength(tweetLength, filter);
   };
 
   render() {

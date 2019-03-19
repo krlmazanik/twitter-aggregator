@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { ButtonGroup, Button } from "react-bootstrap";
 
-import store from "../../store";
-import { filterByExactMention } from "../../store/actions/tweets-actions";
-
 class ExactMentionFilter extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       text: "",
@@ -28,7 +25,9 @@ class ExactMentionFilter extends Component {
 
   handleApply = () => {
     const { text, filter } = this.state;
-    store.dispatch(filterByExactMention(text, filter));
+    const { filterByExactMention } = this.props;
+
+    filterByExactMention(text, filter);
   };
 
   render() {

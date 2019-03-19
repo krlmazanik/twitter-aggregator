@@ -1,11 +1,10 @@
 import React, { Fragment } from "react";
 import { DropdownButton, MenuItem } from "react-bootstrap/lib/";
-import store from "../store";
-import { sortTweets } from "../store/actions/tweets-actions";
 
-const SortButtons = () => {
+const SortButtons = props => {
+  const { sortTweets } = props;
   const handleClick = (sortType, direction) => {
-    store.dispatch(sortTweets(sortType, direction));
+    sortTweets(sortType, direction);
   };
 
   return (
