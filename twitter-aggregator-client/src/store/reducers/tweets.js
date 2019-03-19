@@ -8,7 +8,7 @@ import {
   FILTER_BY_SUBSTRING,
   FILTER_BY_EXACT_MENTION
 } from "../actions/actionTypes";
-import undoable, { includeAction } from "redux-undo";
+
 
 const initialState = {
   tweets: [],
@@ -26,6 +26,7 @@ const tweets = (state = initialState, action) => {
     case SORT_TWEETS:
       const { sortType, direction } = action;
       return {
+        ...state,
         tweets: state.tweets.slice().sort((a, b) => {
           if (sortType === "date") {
             a = new Date(a.created_at);
@@ -47,6 +48,7 @@ const tweets = (state = initialState, action) => {
       const endDate = action.dates[1];
 
       return {
+        ...state,
         tweets: state.tweets.filter(tweet => {
           const { created_at } = tweet;
 
@@ -67,6 +69,7 @@ const tweets = (state = initialState, action) => {
       const { filterType, numberOfLikes } = action;
 
       return {
+        ...state,
         tweets: state.tweets.filter(tweet => {
           const { favorite_count } = tweet;
 
@@ -90,6 +93,7 @@ const tweets = (state = initialState, action) => {
     case FILTER_BY_LENGTH:
       const { length, filterLengthType } = action;
       return {
+        ...state,
         tweets: state.tweets.filter(tweet => {
           const tweetLength = tweet.display_text_range[1];
 
@@ -104,6 +108,7 @@ const tweets = (state = initialState, action) => {
     case FILTER_BY_SUBSTRING:
       const { substring } = action;
       return {
+        ...state,
         tweets: state.tweets.filter(tweet => {
           const { full_text } = tweet;
           return full_text.toLowerCase().includes(substring.toLowerCase());
@@ -114,6 +119,7 @@ const tweets = (state = initialState, action) => {
       const { text, filterMentionType } = action;
 
       return {
+        ...state,
         tweets: state.tweets.filter(tweet => {
           const { hashtags, user_mentions } = tweet.entities;
           if (filterMentionType === "mention" && user_mentions.length >= 1) {
