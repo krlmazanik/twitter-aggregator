@@ -125,13 +125,13 @@ function exactMentionFilter(filtersObj) {
       const { hashtags, user_mentions } = tweet.entities;
       if (filterMentionType === "mention" && user_mentions.length >= 1) {
         const isFound = user_mentions.filter(mention => {
-          return mention.screen_name === text;
+          return mention.screen_name.toLowerCase() === text.toLowerCase();
         });
 
         return isFound.length >= 1;
       } else if (filterMentionType === "hashtag" && hashtags.length >= 1) {
         const isFound = hashtags.filter(hashtag => {
-          return hashtag.text === text;
+          return hashtag.text.toLowerCase() === text.toLowerCase();
         });
 
         return isFound.length >= 1;
