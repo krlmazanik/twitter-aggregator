@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import fetchTweets from "../store/helpers/fetchTweets";
 import Header from "../components/Header";
-import TweetsList from "./TweetsList";
+import Body from "./Body";
 
 class App extends Component {
   componentDidMount() {
@@ -13,7 +13,7 @@ class App extends Component {
     return (
       <Fragment>
         <Header fetchTweets={this.props.fetchTweets} />
-        <TweetsList />
+        <Body />
       </Fragment>
     );
   }

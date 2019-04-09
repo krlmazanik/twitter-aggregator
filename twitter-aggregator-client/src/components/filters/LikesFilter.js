@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { ButtonGroup, Button } from "react-bootstrap/lib";
+import ApplyButton from "./ApplyButton";
 
 class LikesFilter extends Component {
   constructor(props) {
@@ -28,12 +29,12 @@ class LikesFilter extends Component {
 
   handleApply = () => {
     const { likesStart, filter } = this.state;
-    const { filterByLikes } = this.props;
+    const { applyFilter } = this.props;
     if (filter === "rangeOf") {
       const { likesEnd } = this.state;
-      filterByLikes([likesStart, likesEnd], filter);
+      applyFilter("likesFilter", [filter, likesStart, likesEnd]);
     } else {
-      filterByLikes(likesStart, filter);
+      applyFilter("likesFilter", [filter, likesStart]);
     }
   };
 
@@ -51,6 +52,8 @@ class LikesFilter extends Component {
       marginLeft: "5px",
       marginRight: "5px"
     };
+
+    const { applied } = this.props;
 
     return (
       <div>
@@ -94,9 +97,13 @@ class LikesFilter extends Component {
               />
             </Fragment>
           )}
-          <Button style={{ marginLeft: "30px" }} onClick={this.handleApply}>
-            Apply Likes Filter
-          </Button>
+          <ApplyButton
+            style={{ marginLeft: "30px" }}
+            onClick={this.handleApply}
+            applied={applied}
+          >
+            Likes Filter
+          </ApplyButton>
         </div>
       </div>
     );

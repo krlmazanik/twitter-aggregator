@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "approximate-number": "^2.0.0",
+    "bootstrap": "^4.3.1",
     "comma-number": "^2.0.0",
     "epoch-timeago": "^1.1.9",
     "query-string": "^6.2.0",

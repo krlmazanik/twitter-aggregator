@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { ButtonGroup, Button } from "react-bootstrap/lib";
+import ApplyButton from "./ApplyButton";
 
 class TweetLengthFilter extends Component {
   constructor(props) {
@@ -27,9 +28,9 @@ class TweetLengthFilter extends Component {
 
   handleApply = () => {
     const { tweetLength, filter } = this.state;
-    const { filterByLength } = this.props;
+    const { applyFilter } = this.props;
 
-    filterByLength(tweetLength, filter);
+    applyFilter("tweetLengthFilter", [filter, tweetLength]);
   };
 
   render() {
@@ -44,6 +45,8 @@ class TweetLengthFilter extends Component {
       marginLeft: "5px",
       marginRight: "35px"
     };
+
+    const { applied } = this.props;
 
     return (
       <div>
@@ -75,7 +78,9 @@ class TweetLengthFilter extends Component {
             placeholder="Enter desired tweet length"
             style={inputStyles}
           />
-          <Button onClick={this.handleApply}>Apply Tweet Length Filter</Button>
+          <ApplyButton onClick={this.handleApply} applied={applied}>
+            Tweet Length Filter
+          </ApplyButton>
         </div>
       </div>
     );

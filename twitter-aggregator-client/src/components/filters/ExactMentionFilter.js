@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { ButtonGroup, Button } from "react-bootstrap";
+import ApplyButton from "./ApplyButton";
 
 class ExactMentionFilter extends Component {
   constructor(props) {
@@ -25,9 +26,9 @@ class ExactMentionFilter extends Component {
 
   handleApply = () => {
     const { text, filter } = this.state;
-    const { filterByExactMention } = this.props;
+    const { applyFilter } = this.props;
 
-    filterByExactMention(text, filter);
+    applyFilter("exactMentionFilter", [filter, text]);
   };
 
   render() {
@@ -41,6 +42,8 @@ class ExactMentionFilter extends Component {
       { value: "mention", text: "@Mention" },
       { value: "hashtag", text: "#Hashtag" }
     ];
+
+    const { applied } = this.props;
 
     return (
       <div>
@@ -70,9 +73,13 @@ class ExactMentionFilter extends Component {
             placeholder="Enter the text w/o # or @"
             style={inputStyles}
           />
-          <Button onClick={this.handleApply} style={{ marginLeft: "30px" }}>
-            Apply Exact Mention or Hashtag Filter
-          </Button>
+          <ApplyButton
+            onClick={this.handleApply}
+            applied={applied}
+            style={{ marginLeft: "30px" }}
+          >
+            Exact Mention/Hashtag Filter
+          </ApplyButton>
         </div>
       </div>
     );

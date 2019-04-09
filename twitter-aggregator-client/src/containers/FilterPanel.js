@@ -1,6 +1,8 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { Well } from "react-bootstrap/lib";
+import TweetList from "../components/TweetList";
+import masterFilter from "../components/filters/filterFunctions";
 
 import {
   DateFilter,
@@ -10,48 +12,55 @@ import {
   ExactMentionFilter
 } from "../components/filters";
 
-import {
-  filterByDate,
-  filterByLikes,
-  filterByLength,
-  filterBySubstring,
-  filterByExactMention
-} from "../store/actions/tweets-actions";
+import { applyFilter } from "../store/actions/filterBox-actions";
 
 const FilterPanel = props => {
-  const { isFiltersOpen } = props;
-  const {
-    filterByDate,
-    filterByLikes,
-    filterByLength,
-    filterBySubstring,
-    filterByExactMention
-  } = props;
+  const { tweets, isFiltersOpen, applyFilter, appliedFilters } = props;
 
   const isVisible = isFiltersOpen ? { display: "block" } : { display: "none" };
 
+  const filteredTweets = masterFilter({ tweets, appliedFilters })["tweets"];
+
   return (
-    <Well style={isVisible}>
-      <DateFilter filterByDate={filterByDate} />
-      <LikesFilter filterByLikes={filterByLikes} />
-      <TweetLengthFilter filterByLength={filterByLength} />
-      <SubstringFilter filterBySubstring={filterBySubstring} />
-      <ExactMentionFilter filterByExactMention={filterByExactMention} />
-      <hr />
-    </Well>
+    <Fragment>
+      <Well style={isVisible}>
+        <DateFilter
+          applyFilter={applyFilter}
+          applied={appliedFilters.dateFilter.active}
+        />
+        <LikesFilter
+          applyFilter={applyFilter}
+          applied={appliedFilters.likesFilter.active}
+        />
+        <TweetLengthFilter
+          applyFilter={applyFilter}
+          applied={appliedFilters.tweetLengthFilter.active}
+        />
+        <SubstringFilter
+          applyFilter={applyFilter}
+          applied={appliedFilters.substringFilter.active}
+        />
+        <ExactMentionFilter
+          applyFilter={applyFilter}
+          applied={appliedFilters.exactMentionFilter.active}
+        />
+        <hr />
+      </Well>
+      <TweetList style={isVisible} tweets={filteredTweets} />
+    </Fragment>
   );
 };
 
 const mapDispatchToProps = {
-  filterByDate,
-  filterByLikes,
-  filterByLength,
-  filterBySubstring,
-  filterByExactMention
+  applyFilter
 };
 
 const mapStateToProps = store => {
-  return { isFiltersOpen: store.filterBox.isFiltersOpen };
+  return {
+    tweets: store.tweets.tweets,
+    isFiltersOpen: store.filterBox.isFiltersOpen,
+    appliedFilters: store.filterBox.appliedFilters
+  };
 };
 
 export default connect(

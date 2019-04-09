@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { Grid } from "react-bootstrap/lib/";
-import Tweet from "../components/Tweet";
+import TweetList from "../components/TweetList";
 import StatModal from "../components/StatModal";
 import ControlPanel from "../components/ControlPanel";
 import FilterPanel from "./FilterPanel";
@@ -10,7 +10,7 @@ import { toggleModal } from "../store/actions/modal-actions";
 import { toggleFilterBox } from "../store/actions/filterBox-actions";
 import { sortTweets } from "../store/actions/tweets-actions";
 
-const TweetsList = props => {
+const Body = props => {
   const {
     tweets,
     isFetching,
@@ -20,7 +20,7 @@ const TweetsList = props => {
     toggleFilterBox,
     sortTweets
   } = props;
-  const isLoaded = props.tweets.length >= 1;
+  const isLoaded = tweets.length >= 1 && !isFiltersOpen;
 
   return (
     <Grid>
@@ -38,8 +38,7 @@ const TweetsList = props => {
           toggleModal={toggleModal}
         />
         <Spinner isFetching={isFetching} />
-        {isLoaded &&
-          tweets.map(tweet => <Tweet tweet={tweet} key={tweet.id} />)}
+        {isLoaded && <TweetList tweets={tweets} />}
       </Fragment>
     </Grid>
   );
@@ -63,4 +62,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TweetsList);
+)(Body);

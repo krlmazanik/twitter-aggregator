@@ -6,3 +6,11 @@ export function toggleFilterBox(status) {
     status
   };
 }
+
+export function applyFilter(filter, payload) {
+  return {
+    type: types.APPLY_FILTER,
+    filter,
+    payload
+  }
+}

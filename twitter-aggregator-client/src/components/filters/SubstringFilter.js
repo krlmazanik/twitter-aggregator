@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button } from "react-bootstrap/lib";
+import ApplyButton from "./ApplyButton";
 
 class SubstringFilter extends Component {
   constructor(props) {
@@ -16,9 +16,9 @@ class SubstringFilter extends Component {
 
   handleApply = () => {
     const { substring } = this.state;
-    const { filterBySubstring } = this.props;
+    const { applyFilter } = this.props;
 
-    filterBySubstring(substring);
+    applyFilter("substringFilter", substring);
   };
 
   render() {
@@ -27,6 +27,8 @@ class SubstringFilter extends Component {
       marginBottom: "10px",
       marginLeft: "5px"
     };
+
+    const { applied } = this.props;
 
     return (
       <div>
@@ -41,9 +43,13 @@ class SubstringFilter extends Component {
           placeholder="Enter the text here"
           style={inputStyles}
         />
-        <Button onClick={this.handleApply} style={{ marginLeft: "30px" }}>
-          Apply Substring Occurence Filter
-        </Button>
+        <ApplyButton
+          onClick={this.handleApply}
+          applied={applied}
+          style={{ marginLeft: "30px" }}
+        >
+          Substring Occurence Filter
+        </ApplyButton>
       </div>
     );
   }

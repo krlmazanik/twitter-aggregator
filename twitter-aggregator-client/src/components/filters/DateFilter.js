@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Button } from "react-bootstrap/lib";
+import ApplyButton from "./ApplyButton";
 
 class DateFilter extends Component {
   constructor(props) {
@@ -32,17 +33,19 @@ class DateFilter extends Component {
 
   handleApply = () => {
     const { startDate, endDate } = this.state;
-    const { filterByDate } = this.props;
+    const { applyFilter } = this.props;
 
     if (!this.state.dateRange) {
-      filterByDate([startDate]);
+      applyFilter("dateFilter", [startDate]);
     } else {
-      filterByDate([startDate, endDate]);
+      applyFilter("dateFilter", [startDate, endDate]);
     }
   };
 
   render() {
     const { dateRange } = this.state;
+    const { applied } = this.props;
+
     return (
       <div>
         <h3>Filter by Date:</h3>
@@ -81,7 +84,9 @@ class DateFilter extends Component {
           {dateRange ? "Don't use Date Range" : "Use Date Range"}
         </Button>
 
-        <Button onClick={this.handleApply}>Apply Date Filters</Button>
+        <ApplyButton onClick={this.handleApply} applied={applied}>
+          Date Filter
+        </ApplyButton>
       </div>
     );
   }
